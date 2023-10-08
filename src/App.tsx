@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Loader from './components/Loader';
+import GetUsers from './components/GetUsers';
+
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient();
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -12,9 +20,13 @@ function App() {
     }, 3000);
   }, []);
   return (
-    <div className="App">
-      {loading && <Loader />}
-    </div>
+    <QueryClientProvider client={queryClient}>
+
+      <div className="App">
+        {loading ? <Loader /> :
+          <GetUsers />}
+      </div>
+    </QueryClientProvider>
   );
 }
 
